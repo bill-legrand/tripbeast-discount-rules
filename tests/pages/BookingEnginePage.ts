@@ -152,6 +152,28 @@ export class BookingEnginePage {
     await this.page.goto(url);
     await this.page.waitForLoadState('networkidle');
     await this.page.waitForTimeout(3000);
+    
+    // Wait for React app to render content (not just framework code)
+    // Look for any of these indicators that the page has loaded:
+    // - Price text (Item Price, Total, etc.)
+    // - Hotel name/content
+    // - Any dollar amounts
+    try {
+      await this.page.waitForFunction(
+        () => {
+          const text = document.body.textContent || '';
+          return text.includes('Item Price') || 
+                 text.includes('Total') || 
+                 text.includes('Check-in') ||
+                 text.match(/\$\s*\d+/) !== null ||
+                 text.length > 10000; // Page has substantial content
+        },
+        { timeout: 15000 }
+      );
+      console.log('✓ Page content loaded');
+    } catch (e) {
+      console.log('⚠️ Warning: Page content may not have fully loaded');
+    }
   }
 
   /**
@@ -308,6 +330,7 @@ export class BookingEnginePage {
 
   /**
    * Get price breakdown
+   * Uses text pattern matching to find prices on the page
    */
   async getPriceBreakdown(): Promise<{
     subtotal: number;
@@ -316,18 +339,48 @@ export class BookingEnginePage {
     discount: number;
     total: number;
   }> {
-    const subtotalText = await this.subtotalAmount.textContent();
-    const taxText = await this.taxAmount.textContent();
-    const feesText = await this.feesAmount.textContent();
-    const discountText = await this.discountAmount.textContent().catch(() => '0');
-    const totalText = await this.totalAmount.textContent();
+    // Get entire page content
+    const pageContent = await this.page.textContent('body');
+    
+    if (!pageContent) {
+      return {
+        subtotal: 0,
+        tax: 0,
+        fees: 0,
+        discount: 0,
+        total: 0
+      };
+    }
+    
+    // Extract Item Price (subtotal before discount)
+    const itemPriceMatch = pageContent.match(/Item\s+Price[:\s]+\$?([\d,]+\.?\d*)/i);
+    const itemPrice = itemPriceMatch ? parseFloat(itemPriceMatch[1].replace(/,/g, '')) : 0;
+    
+    // Extract Discount
+    const discountMatch = pageContent.match(/Discount[:\s]+-?\$?([\d,]+\.?\d*)/i);
+    const discount = discountMatch ? parseFloat(discountMatch[1].replace(/,/g, '')) : 0;
+    
+    // Extract Tax
+    const taxMatch = pageContent.match(/(?:Tax|Taxes)[:\s]+\$?([\d,]+\.?\d*)/i);
+    const tax = taxMatch ? parseFloat(taxMatch[1].replace(/,/g, '')) : 0;
+    
+    // Extract Fees
+    const feesMatch = pageContent.match(/(?:Fees|Service\s+Fee)[:\s]+\$?([\d,]+\.?\d*)/i);
+    const fees = feesMatch ? parseFloat(feesMatch[1].replace(/,/g, '')) : 0;
+    
+    // Extract Total
+    const totalMatch = pageContent.match(/(?:Total|Grand\s+Total)[:\s]+\$?([\d,]+\.?\d*)/i);
+    const total = totalMatch ? parseFloat(totalMatch[1].replace(/,/g, '')) : 0;
+    
+    // Calculate subtotal (Item Price - Discount)
+    const subtotal = itemPrice - discount;
     
     return {
-      subtotal: this.extractPrice(subtotalText || '0'),
-      tax: this.extractPrice(taxText || '0'),
-      fees: this.extractPrice(feesText || '0'),
-      discount: this.extractPrice(discountText || '0'),
-      total: this.extractPrice(totalText || '0')
+      subtotal,
+      tax,
+      fees,
+      discount,
+      total
     };
   }
 

@@ -18,6 +18,35 @@ npx playwright install chromium
 
 ---
 
+## 🆕 NEW: Low Rate Discount Tests
+
+**Comprehensive test suite for the Low Rate Discount rule (2% discount on rates under $100, April 1-15, 2026)**
+
+### Quick Start
+```powershell
+# Run Low Rate Discount tests
+.\run-low-rate-tests.ps1
+
+# Run with browser visible
+.\run-low-rate-tests.ps1 -Headed
+```
+
+### Documentation
+- **[LOW_RATE_DISCOUNT_QUICK_START.md](LOW_RATE_DISCOUNT_QUICK_START.md)** - Get started in 3 steps 🚀
+- **[LOW_RATE_DISCOUNT_INDEX.md](LOW_RATE_DISCOUNT_INDEX.md)** - Complete documentation index 📚
+- **[LOW_RATE_DISCOUNT_TEST_SUMMARY.md](LOW_RATE_DISCOUNT_TEST_SUMMARY.md)** - Full test coverage details 📊
+- **[RUN_LOW_RATE_DISCOUNT_TESTS.md](RUN_LOW_RATE_DISCOUNT_TESTS.md)** - Execution guide 📖
+
+### Test Coverage
+- ✅ **31+ test cases** covering all scenarios
+- ✅ **Rate threshold testing** ($99 vs $100 boundary)
+- ✅ **Date range validation** (April 1-15, 2026)
+- ✅ **Multi-night stay calculations**
+- ✅ **Boundary and edge cases**
+- ✅ **Matrix and regression tests**
+
+---
+
 ## Overview
 
 This repository contains comprehensive testing documentation for the Tripbeast Discount Rules enhancement for Closed User Groups (CUG). The discount rules feature allows for flexible discount configuration across different booking engines, channels, and stakeholders.
@@ -376,3 +405,5 @@ postman collection run API_TEST_COLLECTION.json
 ---
 
 **For questions or issues, please contact the Test Lead or refer to the detailed documentation files.**
+
+
