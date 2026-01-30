@@ -1,0 +1,794 @@
+{
+  "info": {
+    "name": "Tripbeast Discount Rules API Tests",
+    "description": "API test collection for Discount Rules feature testing",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "version": "1.0.0"
+  },
+  "item": [
+    {
+      "name": "Discount Rule Management",
+      "item": [
+        {
+          "name": "Create Discount Rule",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{auth_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"rule_name\": \"CUG_Winter_2026\",\n  \"discount_type\": \"default\",\n  \"discount_percentage\": 15,\n  \"channels\": [\"Channel_A\"],\n  \"products\": [\"PROD-001\", \"PROD-002\"],\n  \"is_default\": true,\n  \"strike_through_enabled\": true,\n  \"status\": \"active\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/discount-rules",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "discount-rules"]
+            },
+            "description": "Create a new discount rule with system-generated ID"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Discount Rule by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{auth_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/discount-rules/{{rule_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "discount-rules", "{{rule_id}}"]
+            },
+            "description": "Retrieve a specific discount rule by ID"
+          },
+          "response": []
+        },
+        {
+          "name": "Get All Discount Rules",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{auth_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/discount-rules",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "discount-rules"]
+            },
+            "description": "Retrieve all discount rules"
+          },
+          "response": []
+        },
+        {
+          "name": "Update Discount Rule",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{auth_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"rule_name\": \"CUG_Winter_2026_Updated\",\n  \"discount_percentage\": 20,\n  \"status\": \"active\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/discount-rules/{{rule_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "discount-rules", "{{rule_id}}"]
+            },
+            "description": "Update an existing discount rule"
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Discount Rule",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{auth_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/discount-rules/{{rule_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "discount-rules", "{{rule_id}}"]
+            },
+            "description": "Delete a discount rule"
+          },
+          "response": []
+        },
+        {
+          "name": "Deactivate Discount Rule",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{auth_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"inactive\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/discount-rules/{{rule_id}}/status",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "discount-rules", "{{rule_id}}", "status"]
+            },
+            "description": "Deactivate a discount rule"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Date-Based Discount Rules",
+      "item": [
+        {
+          "name": "Create Date Range Discount",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{auth_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"rule_name\": \"January_Sale_2026\",\n  \"discount_type\": \"date_range\",\n  \"discount_percentage\": 15,\n  \"start_date\": \"2026-01-01\",\n  \"end_date\": \"2026-01-31\",\n  \"channels\": [\"Channel_A\"],\n  \"products\": [\"PROD-001\"],\n  \"strike_through_enabled\": true,\n  \"status\": \"active\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/discount-rules",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "discount-rules"]
+            },
+            "description": "Create a date range-based discount rule"
+          },
+          "response": []
+        },
+        {
+          "name": "Create Specific Date Discount",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{auth_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"rule_name\": \"Flash_Sale_Jan15\",\n  \"discount_type\": \"specific_date\",\n  \"discount_percentage\": 20,\n  \"specific_dates\": [\"2026-01-15\"],\n  \"channels\": [\"Channel_A\"],\n  \"products\": [\"PROD-001\"],\n  \"strike_through_enabled\": true,\n  \"status\": \"active\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/discount-rules",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "discount-rules"]
+            },
+            "description": "Create a specific date-based discount rule"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Dynamic Discount Rules",
+      "item": [
+        {
+          "name": "Create Dynamic Discount - Value Based",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{auth_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"rule_name\": \"High_Value_Discount\",\n  \"discount_type\": \"dynamic\",\n  \"discount_percentage\": 10,\n  \"conditions\": [\n    {\n      \"field\": \"booking_value\",\n      \"operator\": \"greater_than\",\n      \"value\": 500\n    }\n  ],\n  \"channels\": [\"Channel_A\"],\n  \"products\": [\"PROD-001\"],\n  \"strike_through_enabled\": true,\n  \"status\": \"active\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/discount-rules",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "discount-rules"]
+            },
+            "description": "Create a dynamic discount rule based on booking value"
+          },
+          "response": []
+        },
+        {
+          "name": "Create Dynamic Discount - Multiple Conditions",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{auth_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"rule_name\": \"Early_Bird_High_Value\",\n  \"discount_type\": \"dynamic\",\n  \"discount_percentage\": 15,\n  \"conditions\": [\n    {\n      \"field\": \"booking_value\",\n      \"operator\": \"greater_than\",\n      \"value\": 1000\n    },\n    {\n      \"field\": \"advance_booking_days\",\n      \"operator\": \"less_than\",\n      \"value\": 30\n    }\n  ],\n  \"condition_logic\": \"AND\",\n  \"channels\": [\"Channel_A\"],\n  \"products\": [\"PROD-001\"],\n  \"strike_through_enabled\": true,\n  \"status\": \"active\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/discount-rules",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "discount-rules"]
+            },
+            "description": "Create a dynamic discount rule with multiple conditions"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Channel Configuration",
+      "item": [
+        {
+          "name": "Set Default Rule for Channel",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{auth_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"channel_id\": \"Channel_A\",\n  \"discount_rule_id\": \"{{rule_id}}\",\n  \"is_default\": true\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/channels/{{channel_id}}/discount-rules/default",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "channels", "{{channel_id}}", "discount-rules", "default"]
+            },
+            "description": "Set a discount rule as default for a channel"
+          },
+          "response": []
+        },
+        {
+          "name": "Configure Stakeholder Discount",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{auth_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"channel_id\": \"Channel_A\",\n  \"stakeholder_id\": \"STK-001\",\n  \"discount_rule_id\": \"{{rule_id}}\",\n  \"discount_percentage\": 10\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/channels/{{channel_id}}/stakeholders/{{stakeholder_id}}/discount",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "channels", "{{channel_id}}", "stakeholders", "{{stakeholder_id}}", "discount"]
+            },
+            "description": "Configure stakeholder-specific discount"
+          },
+          "response": []
+        },
+        {
+          "name": "Apply Rule to Products",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{auth_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"discount_rule_id\": \"{{rule_id}}\",\n  \"product_ids\": [\"PROD-001\", \"PROD-002\", \"PROD-003\"]\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/discount-rules/{{rule_id}}/products",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "discount-rules", "{{rule_id}}", "products"]
+            },
+            "description": "Apply discount rule to specific products"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Channel Discount Rules",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{auth_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/channels/{{channel_id}}/discount-rules",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "channels", "{{channel_id}}", "discount-rules"]
+            },
+            "description": "Get all discount rules for a channel"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "JWT Token Operations",
+      "item": [
+        {
+          "name": "Generate JWT Token - Ancillary BE",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{auth_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_id\": \"USR-12345\",\n  \"booking_engine_type\": \"ancillary\",\n  \"discount_rule_id\": \"{{rule_id}}\",\n  \"channel_id\": \"Channel_A\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/auth/generate-token",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "auth", "generate-token"]
+            },
+            "description": "Generate JWT token with discount rule ID for Ancillary BE"
+          },
+          "response": []
+        },
+        {
+          "name": "Generate JWT Token - CUG BE",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{auth_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_id\": \"USR-67890\",\n  \"booking_engine_type\": \"cug\",\n  \"discount_rule_id\": \"{{rule_id}}\",\n  \"channel_id\": \"Channel_A\",\n  \"stakeholder_id\": \"STK-001\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/auth/generate-token",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "auth", "generate-token"]
+            },
+            "description": "Generate JWT token with discount rule ID for CUG BE"
+          },
+          "response": []
+        },
+        {
+          "name": "Validate JWT Token",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"token\": \"{{jwt_token}}\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/auth/validate-token",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "auth", "validate-token"]
+            },
+            "description": "Validate JWT token and extract discount rule ID"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Price Calculation",
+      "item": [
+        {
+          "name": "Calculate Price with Discount",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{auth_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"product_id\": \"PROD-001\",\n  \"base_price\": 1000,\n  \"markup_percentage\": 10,\n  \"discount_rule_id\": \"{{rule_id}}\",\n  \"channel_id\": \"Channel_A\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/pricing/calculate",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "pricing", "calculate"]
+            },
+            "description": "Calculate final price with discount applied"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Product Price with Strike-Through",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{auth_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/products/{{product_id}}/price?channel_id={{channel_id}}&discount_rule_id={{rule_id}}&include_strikethrough=true",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "products", "{{product_id}}", "price"],
+              "query": [
+                {
+                  "key": "channel_id",
+                  "value": "{{channel_id}}"
+                },
+                {
+                  "key": "discount_rule_id",
+                  "value": "{{rule_id}}"
+                },
+                {
+                  "key": "include_strikethrough",
+                  "value": "true"
+                }
+              ]
+            },
+            "description": "Get product price with strike-through information"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Booking Operations",
+      "item": [
+        {
+          "name": "Create Booking with Discount",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"product_id\": \"PROD-001\",\n  \"channel_id\": \"Channel_A\",\n  \"user_id\": \"USR-12345\",\n  \"booking_details\": {\n    \"check_in\": \"2026-02-01\",\n    \"check_out\": \"2026-02-05\",\n    \"guests\": 2\n  }\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/bookings",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "bookings"]
+            },
+            "description": "Create a booking with discount applied via JWT token"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Booking Details",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{auth_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/bookings/{{booking_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "bookings", "{{booking_id}}"]
+            },
+            "description": "Get booking details including applied discount"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Upload User Functionality",
+      "item": [
+        {
+          "name": "Upload Users with Discount Rules - Ancillary",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{auth_token}}"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "file",
+                  "type": "file",
+                  "src": "/path/to/users_ancillary.csv"
+                },
+                {
+                  "key": "booking_engine_type",
+                  "value": "ancillary",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/users/upload",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "users", "upload"]
+            },
+            "description": "Upload users with discount rule assignments for Ancillary BE"
+          },
+          "response": []
+        },
+        {
+          "name": "Upload Users with Discount Rules - CUG",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{auth_token}}"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "file",
+                  "type": "file",
+                  "src": "/path/to/users_cug.csv"
+                },
+                {
+                  "key": "booking_engine_type",
+                  "value": "cug",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/users/upload",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "users", "upload"]
+            },
+            "description": "Upload users with discount rule assignments for CUG BE"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Validation & Error Cases",
+      "item": [
+        {
+          "name": "Create Rule - Invalid Percentage",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{auth_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"rule_name\": \"Invalid_Discount\",\n  \"discount_type\": \"default\",\n  \"discount_percentage\": 150,\n  \"channels\": [\"Channel_A\"],\n  \"status\": \"active\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/discount-rules",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "discount-rules"]
+            },
+            "description": "Test validation for invalid discount percentage (>100%)"
+          },
+          "response": []
+        },
+        {
+          "name": "Create Rule - Empty Name",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{auth_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"rule_name\": \"\",\n  \"discount_type\": \"default\",\n  \"discount_percentage\": 10,\n  \"channels\": [\"Channel_A\"],\n  \"status\": \"active\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/discount-rules",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "discount-rules"]
+            },
+            "description": "Test validation for empty rule name"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Non-existent Rule",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{auth_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/discount-rules/DR-99999",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "discount-rules", "DR-99999"]
+            },
+            "description": "Test error handling for non-existent discount rule"
+          },
+          "response": []
+        },
+        {
+          "name": "JWT Token - Invalid Rule ID",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{auth_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_id\": \"USR-12345\",\n  \"booking_engine_type\": \"ancillary\",\n  \"discount_rule_id\": \"DR-99999\",\n  \"channel_id\": \"Channel_A\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/auth/generate-token",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "auth", "generate-token"]
+            },
+            "description": "Test JWT token generation with invalid discount rule ID"
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "https://api.tripbeast.com",
+      "type": "string"
+    },
+    {
+      "key": "auth_token",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "jwt_token",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "rule_id",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "channel_id",
+      "value": "Channel_A",
+      "type": "string"
+    },
+    {
+      "key": "stakeholder_id",
+      "value": "STK-001",
+      "type": "string"
+    },
+    {
+      "key": "product_id",
+      "value": "PROD-001",
+      "type": "string"
+    },
+    {
+      "key": "booking_id",
+      "value": "",
+      "type": "string"
+    }
+  ]
+}

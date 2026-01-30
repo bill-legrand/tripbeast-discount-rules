@@ -1,0 +1,347 @@
+Test Scenario ID,Test Scenario Name,Priority,Category,Preconditions,Test Steps,Expected Results,Test Data,Status
+TS-001,Discount Rule Creation - Basic,High,Rule Creation,User has access to discount rule creation interface,"1. Navigate to discount rule creation page
+2. Enter rule name: 'CUG_Winter_Discount'
+3. Save the rule
+4. Verify rule ID is generated","1. Page loads successfully
+2. Name is accepted
+3. Rule is created with system-generated ID
+4. Unique ID is displayed (e.g. DR-12345)",Rule Name: CUG_Winter_Discount,Not Started
+TS-002,System-Generated ID Validation,High,Rule Creation,None,"1. Create multiple discount rules
+2. Verify ID format
+3. Check ID uniqueness","1. Each rule gets unique ID
+2. ID follows consistent pattern
+3. No duplicate IDs exist",Create 5 rules with different names,Not Started
+TS-003,Rule Name Special Characters,Medium,Rule Creation,User has access to discount rule creation interface,"1. Enter rule name with special chars: 'CUG@2026#Discount!'
+2. Save the rule","1. System validates input
+2. Rule is created or appropriate error shown",Rule Name: CUG@2026#Discount!,Not Started
+TS-004,Empty Rule Name Validation,High,Rule Creation,User has access to discount rule creation interface,"1. Leave rule name field empty
+2. Attempt to save
+3. Verify error message","1. Validation error appears
+2. Save is prevented
+3. Clear error message displayed",Rule Name: (empty),Not Started
+TS-005,Duplicate Rule Name,Medium,Rule Creation,Discount rule 'Summer_Sale' already exists,"1. Enter existing rule name: 'Summer_Sale'
+2. Save the rule
+3. Verify both rules exist","1. Name is accepted
+2. System allows or shows warning
+3. Both rules have unique IDs",Rule Name: Summer_Sale (duplicate),Not Started
+TS-006,JWT Token - Ancillary BE,Critical,JWT Integration,Discount rule created with ID 'DR-12345',"1. Configure rule for Ancillary Booking Engine
+2. Generate JWT token for ancillary booking
+3. Decode JWT token
+4. Verify token structure","1. Configuration saved
+2. Token generated successfully
+3. Token contains discount rule ID 'DR-12345'
+4. ID is in correct field/format",Discount Rule ID: DR-12345,Not Started
+TS-007,JWT Token - CUG BE,Critical,JWT Integration,Discount rule created with ID 'DR-67890',"1. Configure rule for CUG Booking Engine
+2. Generate JWT token for CUG booking
+3. Decode JWT token
+4. Make booking with token","1. Configuration saved
+2. Token generated successfully
+3. Token contains discount rule ID 'DR-67890'
+4. Discount applied correctly",Discount Rule ID: DR-67890,Not Started
+TS-008,JWT Token - B2C Public BE,High,JWT Integration,Discount rule configured for B2C Public BE,"1. Access B2C Public Booking Engine
+2. Check JWT token (if any)
+3. Verify discount application method","1. Page loads
+2. No discount rule ID in token
+3. Uses alternative method (not JWT)",B2C Public Booking Engine session,Not Started
+TS-009,Invalid JWT - Missing Rule ID,High,JWT Integration,JWT token without discount rule ID,"1. Use JWT token without discount_rule_id
+2. Attempt booking
+3. Verify discount application","1. Token is validated
+2. System handles gracefully
+3. No discount applied or default used",JWT token without discount_rule_id field,Not Started
+TS-010,Invalid JWT - Non-existent Rule ID,High,JWT Integration,JWT token with non-existent discount rule ID,"1. Use JWT token with ID 'DR-99999' (non-existent)
+2. Attempt booking
+3. Verify error handling","1. Token is validated
+2. System validates discount rule ID
+3. Appropriate error message shown",JWT token with discount_rule_id: DR-99999,Not Started
+TS-011,Default Rule for Channel,High,Channel Configuration,Channel 'Channel_A' exists with products,"1. Navigate to discount rule configuration
+2. Select discount rule 'DR-12345'
+3. Mark as default for 'Channel_A'
+4. Verify default status","1. Page loads
+2. Rule selected
+3. Setting saved
+4. Rule shows as default for channel",Channel: Channel_A; Rule: DR-12345,Not Started
+TS-012,Stakeholder-Wise Discount,High,Channel Configuration,Channel with multiple stakeholders,"1. Select channel 'Channel_B'
+2. Configure discount for 'Stakeholder_1': 10%
+3. Configure discount for 'Stakeholder_2': 15%
+4. Verify configurations","1. Channel selected
+2. Configuration saved
+3. Configuration saved
+4. Both stakeholders have different discounts",Stakeholder_1: 10%; Stakeholder_2: 15%,Not Started
+TS-013,Apply to Active Products,Critical,Channel Configuration,Channel with 5 active products,"1. Select discount rule 'DR-12345'
+2. Apply to all active products in channel
+3. Verify each product has discount
+4. Check inactive products","1. Rule selected
+2. Application successful
+3. All 5 products show discount
+4. Inactive products not affected",5 active products in channel,Not Started
+TS-014,Apply to Specific Products,Medium,Channel Configuration,Channel with 10 active products,"1. Select discount rule 'DR-12345'
+2. Apply to products 1 3 5 only
+3. Verify selected products
+4. Verify non-selected products","1. Rule selected
+2. Selection saved
+3. Products 1 3 5 have discount
+4. Products 2 4 6-10 have no discount",Products 1 3 5 selected,Not Started
+TS-015,Multiple Rules per Channel,High,Channel Configuration,Channel 'Channel_C' exists,"1. Create discount rule 'DR-AAA' for Channel_C
+2. Create discount rule 'DR-BBB' for Channel_C
+3. Verify both rules exist
+4. Test rule priority/conflict resolution","1. Rule created
+2. Rule created
+3. Both rules active
+4. System handles appropriately",Two rules for same channel,Not Started
+TS-016,Remove Default Status,Medium,Channel Configuration,Rule 'DR-12345' is default for 'Channel_A',"1. Navigate to rule configuration
+2. Unmark 'DR-12345' as default
+3. Verify default status removed
+4. Test booking on Channel_A","1. Page loads
+2. Setting updated
+3. No default rule for Channel_A
+4. No default discount applied",Channel_A with default rule,Not Started
+TS-017,Default Discount Application,Critical,Discount Types,Product with price $1000,"1. Configure default discount: 10%
+2. View product in booking engine
+3. Verify discounted price
+4. Verify subtotal calculation","1. Configuration saved
+2. Product displayed
+3. Price shows $900
+4. Subtotal = $900 (before taxes/fees)",Original Price: $1000; Discount: 10%,Not Started
+TS-018,Date Range-Based Discount,Critical,Discount Types,Current date within discount range,"1. Configure discount: 15% for Jan 1-31 2026
+2. Access booking on Jan 15 2026
+3. Verify discounted price (from $1000)
+4. Access booking on Feb 1 2026","1. Configuration saved
+2. Discount applied
+3. Price shows $850
+4. Discount not applied",Date Range: Jan 1-31 2026; Discount: 15%,Not Started
+TS-019,Specific Date-Based Discount,High,Discount Types,Specific dates configured,"1. Configure discount: 20% on Jan 15 2026
+2. Access booking on Jan 15 2026
+3. Verify discounted price (from $1000)
+4. Access booking on Jan 14 2026
+5. Access booking on Jan 16 2026","1. Configuration saved
+2. Discount applied
+3. Price shows $800
+4. Discount not applied
+5. Discount not applied",Specific Date: Jan 15 2026; Discount: 20%,Not Started
+TS-020,Dynamic Discount Rules,Critical,Discount Types,Dynamic rules configured (similar to markup rules),"1. Configure dynamic rule: 10% if booking value > $500
+2. Book product worth $600
+3. Book product worth $400
+4. Verify dynamic condition evaluation","1. Rule saved
+2. 10% discount applied
+3. No discount applied
+4. Conditions work correctly",Condition: booking value > $500; Discount: 10%,Not Started
+TS-021,Multiple Discount Types Priority,High,Discount Types,Multiple discount types configured for same product,"1. Configure default: 10% date range: 15% specific date: 20%
+2. Access on specific date within range
+3. Verify which discount is applied
+4. Document priority order","1. All configured
+2. System applies appropriate discount
+3. Priority logic followed
+4. Priority order confirmed",Default: 10%; Date Range: 15%; Specific: 20%,Not Started
+TS-022,Discount Percentage Validation,High,Discount Types,Discount rule creation interface,"1. Enter discount: 0%
+2. Enter discount: 100%
+3. Enter discount: 101%
+4. Enter discount: -5%
+5. Enter discount: 25.5%","1. Validation check
+2. Validation check
+3. Error shown
+4. Error shown
+5. Accepted or rejected per business rules",Various percentage values,Not Started
+TS-023,Discount on Subtotal Only,Critical,Discount Types,Product with price breakdown,"1. Product: Base Price $1000 Markup $100 Tax $50 Fees $25
+2. Apply 10% discount
+3. Verify calculation
+4. Verify final price","1. Total: $1175
+2. Discount calculated on subtotal
+3. Discount = 10% of $1100 = $110
+4. Subtotal: $990 Tax: $50 Fees: $25 Total: $1065",Base: $1000; Markup: $100; Discount: 10%,Not Started
+TS-024,Dynamic Discount Multiple Conditions,High,Discount Types,Complex dynamic rule configured,"1. Configure: 15% if value > $1000 AND booking date < 30 days
+2. Book $1200 product 20 days advance
+3. Book $1200 product 40 days advance
+4. Book $800 product 20 days advance","1. Rule saved
+2. 15% discount applied
+3. No discount
+4. No discount",Multiple conditions with AND logic,Not Started
+TS-025,Strike-Through Case 1 - Both ON,Critical,Strike-Through Display,Hotel with Expedia strike-through + Discount rule,"1. Hotel strike-through: ON (Original: $1200 Supplier: $1000)
+2. Discount rule: ON (10% discount)
+3. Discount strike-through: ON
+4. View product in booking engine
+5. Verify display","1. Configured
+2. Configured
+3. Configured
+4. Combined strike-through visible
+5. Shows: ~~$1200~~ ~~$1000~~ $900",Supplier Original: $1200; Supplier Price: $1000; Discount: 10%,Not Started
+TS-026,Strike-Through Case 2 - Hotel OFF,Critical,Strike-Through Display,Hotel without strike-through + Discount rule,"1. Hotel strike-through: OFF (Price: $1000)
+2. Discount rule: ON (10% discount)
+3. Discount strike-through: ON
+4. View product in booking engine
+5. Verify display","1. Configured
+2. Configured
+3. Configured
+4. Only discount strike-through visible
+5. Shows: ~~$1000~~ $900",Hotel Price: $1000; Discount: 10%,Not Started
+TS-027,Strike-Through Case 3 - Discount OFF,Critical,Strike-Through Display,Hotel with strike-through + Discount rule,"1. Hotel strike-through: ON (Original: $1200 Supplier: $1000)
+2. Discount rule: ON (10% discount)
+3. Discount strike-through: OFF
+4. View product in booking engine
+5. Verify display","1. Configured
+2. Configured
+3. Configured
+4. No strike-through visible
+5. Shows: $900 (final discounted price only)",Supplier Original: $1200; Supplier Price: $1000; Discount: 10%,Not Started
+TS-028,Strike-Through Case 4 - Both OFF,High,Strike-Through Display,Hotel without strike-through + Discount rule,"1. Hotel strike-through: OFF (Price: $1000)
+2. Discount rule: ON (10% discount)
+3. Discount strike-through: OFF
+4. View product in booking engine
+5. Verify display","1. Configured
+2. Configured
+3. Configured
+4. No strike-through visible
+5. Shows: $900 (discounted value only)",Hotel Price: $1000; Discount: 10%,Not Started
+TS-029,Toggle Strike-Through Setting,Medium,Strike-Through Display,Discount rule with strike-through ON,"1. View product with strike-through: ~~$1000~~ $900
+2. Toggle strike-through setting to OFF
+3. Refresh booking engine
+4. Verify display
+5. Toggle back to ON","1. Strike-through visible
+2. Setting updated
+3. Strike-through removed
+4. Shows: $900 only
+5. Strike-through reappears",Discount: 10%; Original: $1000,Not Started
+TS-030,Strike-Through Multiple Discounts,Medium,Strike-Through Display,Multiple discount rules applicable,"1. Apply default discount: 10% ($1000 → $900)
+2. Apply date range discount: additional 5%
+3. Verify strike-through display
+4. Verify final price calculation","1. Applied
+2. Applied
+3. Shows appropriate strike-through
+4. Correctly calculated",Multiple discounts stacked,Not Started
+TS-031,Upload User - Ancillary BE,High,Integration,Ancillary Booking Engine configured,"1. Upload user list with discount rule IDs
+2. Verify discount rule assignment
+3. Test booking with uploaded user
+4. Verify JWT token contains correct rule ID","1. Upload successful
+2. Users assigned to rules
+3. Correct discount applied
+4. Token validated",User list CSV with discount rule IDs,Not Started
+TS-032,Upload User - CUG BE,High,Integration,CUG Booking Engine configured,"1. Upload user list for CUG with discount rules
+2. Verify user-discount mapping
+3. Test booking with CUG user
+4. Verify JWT token","1. Upload successful
+2. Mapping correct
+3. Correct discount applied
+4. Token contains correct rule ID",CUG user list with discount rule IDs,Not Started
+TS-033,Discount vs Markup Rule Behavior,High,Integration,Existing markup rules configured,"1. Compare discount rule interface with markup rule
+2. Test configuration options
+3. Test application logic
+4. Verify consistency","1. Similar UI/UX
+2. Similar options available
+3. Follows similar patterns
+4. Discount rules work like markup rules",Existing markup rule configurations,Not Started
+TS-034,Discount + Markup Combined,Critical,Integration,Product with both markup and discount rules,"1. Product base price: $1000
+2. Apply markup rule: +10% ($100)
+3. Apply discount rule: -15%
+4. Verify final subtotal
+5. Add taxes and fees","1. Base price set
+2. Subtotal: $1100
+3. Discount on $1100 = $165
+4. Subtotal: $935
+5. Final total calculated correctly",Base: $1000; Markup: +10%; Discount: -15%,Not Started
+TS-035,Discount Rule Deactivation,Medium,Integration,Active discount rule 'DR-12345',"1. Deactivate discount rule 'DR-12345'
+2. Verify rule status
+3. Test booking with deactivated rule
+4. Reactivate rule
+5. Test booking","1. Rule deactivated
+2. Shows as inactive
+3. No discount applied
+4. Rule active again
+5. Discount applied",Discount rule DR-12345,Not Started
+TS-036,Invalid Percentage - Text Input,Medium,Negative Testing,Discount rule creation interface,"1. Enter discount: 'ABC'
+2. Attempt to save
+3. Verify error message","1. Validation error
+2. Save prevented
+3. 'Please enter a valid percentage'",Discount: ABC,Not Started
+TS-037,Expired Date Range Discount,High,Negative Testing,Date range discount configured for past dates,"1. Configure discount: 10% for Dec 1-31 2025
+2. Access booking on Jan 29 2026
+3. Verify no discount","1. Configuration saved
+2. Discount not applied
+3. Full price shown",Date Range: Dec 1-31 2025 (expired),Not Started
+TS-038,Unassigned Discount Rule,Medium,Negative Testing,Discount rule created but not assigned to channel,"1. Create discount rule 'DR-ORPHAN'
+2. Do not assign to any channel
+3. Attempt to use in booking
+4. Verify behavior","1. Rule created
+2. No assignment
+3. Rule not available
+4. Appropriate handling",Unassigned discount rule,Not Started
+TS-039,Concurrent Rule Modifications,Low,Negative Testing,Two users accessing same discount rule,"1. User A opens discount rule 'DR-12345'
+2. User B opens same rule
+3. User A modifies discount to 15% and saves
+4. User B modifies discount to 20% and saves
+5. Verify final state","1. Rule loaded
+2. Rule loaded
+3. Saved successfully
+4. Conflict handling
+5. Appropriate conflict resolution",Concurrent modifications,Not Started
+TS-040,Delete Rule with Active Bookings,High,Negative Testing,Discount rule with active bookings,"1. Identify rule 'DR-12345' with active bookings
+2. Attempt to delete rule
+3. Verify system behavior
+4. Verify new bookings","1. Rule identified
+2. Warning or prevention
+3. Existing bookings protected
+4. Rule not available for new bookings",Active discount rule with bookings,Not Started
+TS-041,Discount Calculation Performance,Medium,Performance,100 products with discount rules,"1. Load booking engine with 100 products
+2. Measure discount calculation time
+3. Verify all discounts calculated
+4. Check page load time","1. Page loads
+2. Time recorded
+3. All 100 products show discounts
+4. Within acceptable limits (<3 seconds)",100 products with various discount rules,Not Started
+TS-042,JWT Token Size Impact,Low,Performance,JWT token generation,"1. Generate JWT token with discount rule ID
+2. Measure token size
+3. Compare with token without discount ID
+4. Verify token validity","1. Token generated
+2. Size recorded
+3. Size difference minimal
+4. Token works correctly",JWT tokens with and without discount rule ID,Not Started
+TS-043,Strike-Through Readability,Medium,UI/UX,Product with strike-through pricing,"1. View product with strike-through: ~~$1000~~ $900
+2. Verify text styling
+3. Verify color contrast
+4. Test on mobile device","1. Display rendered
+2. Strike-through clearly visible
+3. Original and discounted prices distinguishable
+4. Readable on small screens",Various price points,Not Started
+TS-044,Discount Information Display,Medium,UI/UX,Product with discount applied,"1. View product with 15% discount
+2. Verify discount percentage shown
+3. Verify savings amount
+4. Check tooltip/info icon","1. Product displayed
+2. '15% OFF' or similar displayed
+3. 'Save $150' shown
+4. Additional discount details available",15% discount on $1000 product,Not Started
+TS-045,Responsive Design,Medium,UI/UX,Booking engine with discount rules,"1. View on desktop (1920x1080)
+2. View on tablet (768x1024)
+3. View on mobile (375x667)
+4. Verify text wrapping","1. Strike-through displays correctly
+2. Strike-through displays correctly
+3. Strike-through displays correctly
+4. No layout issues",Multiple device sizes,Not Started
+TS-046,JWT Token Tampering,Critical,Security,Valid JWT token with discount rule ID,"1. Generate valid JWT token with 'DR-12345'
+2. Manually modify token to 'DR-99999'
+3. Attempt booking with tampered token
+4. Verify error handling","1. Token generated
+2. Token tampered
+3. Token validation fails
+4. Appropriate error message",Tampered JWT token,Not Started
+TS-047,Unauthorized Access,High,Security,User without discount rule management permissions,"1. Login as user without permissions
+2. Attempt to access discount rule creation
+3. Attempt to modify existing rule
+4. Verify error message","1. Login successful
+2. Access denied
+3. Access denied
+4. 'Unauthorized access' message shown",User without permissions,Not Started
+TS-048,SQL Injection Prevention,High,Security,Discount rule creation interface,"1. Enter rule name: ''; DROP TABLE rules; --'
+2. Attempt to save
+3. Verify database integrity","1. Input sanitized
+2. Input rejected or sanitized
+3. No SQL injection occurred",SQL injection attempt in rule name,Not Started
+TS-049,XSS Attack Prevention,High,Security,Discount rule creation interface,"1. Enter rule name: '<script>alert('XSS')</script>'
+2. Save and view rule
+3. Verify display","1. Input sanitized
+2. Script not executed
+3. Rule name displayed as text not executed",XSS attempt in rule name,Not Started
+TS-050,Markup Rules Regression,Critical,Regression,Existing markup rules configured,"1. Verify existing markup rules
+2. Test markup rule application
+3. Create new booking with markup
+4. Verify no interference from discount feature","1. All rules present
+2. Markups applied correctly
+3. Markup calculated correctly
+4. Markups work independently",Existing markup rule configurations,Not Started
