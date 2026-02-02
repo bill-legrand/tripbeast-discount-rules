@@ -368,8 +368,8 @@ export class BookingEnginePage {
     const feesMatch = pageContent.match(/(?:Fees|Service\s+Fee)[:\s]+\$?([\d,]+\.?\d*)/i);
     const fees = feesMatch ? parseFloat(feesMatch[1].replace(/,/g, '')) : 0;
     
-    // Extract Total
-    const totalMatch = pageContent.match(/(?:Total|Grand\s+Total)[:\s]+\$?([\d,]+\.?\d*)/i);
+    // Extract Total (including "Total Price" used by Ancillary)
+    const totalMatch = pageContent.match(/(?:Total\s+Price|Total|Grand\s+Total)[:\s]+\$?([\d,]+\.?\d*)/i);
     const total = totalMatch ? parseFloat(totalMatch[1].replace(/,/g, '')) : 0;
     
     // Calculate subtotal (Item Price - Discount)

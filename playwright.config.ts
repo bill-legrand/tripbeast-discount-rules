@@ -5,6 +5,7 @@ import { defineConfig, devices } from '@playwright/test';
  * Base URL: https://admin.rezmatestage.com
  */
 export default defineConfig({
+  globalSetup: './global-setup.ts',
   testDir: './tests',
   
   /* Maximum time one test can run for */

@@ -43,6 +43,110 @@ export const TEST_HOTEL_PARAMS = {
 };
 
 /**
+ * Additional Las Vegas hotels for multi-hotel testing
+ * hotel_id/property_id/room_id from booking engine.
+ * Only 2008/12384405/201273159 confirmed working; others are candidates to try.
+ */
+export const LAS_VEGAS_HOTELS = [
+  {
+    hotel_id: '2008',
+    property_id: '12384405',
+    room_id: '201273159',
+    search_query: 'Las Vegas',
+    longitude: '-115.141376',
+    latitude: '36.17006',
+    type: 'id',
+    gds: 'expedia',
+    name: 'Longhorn Casino & Hotel'
+  },
+  {
+    hotel_id: '2007',
+    property_id: '12384404',
+    room_id: '201273158',
+    search_query: 'Las Vegas',
+    longitude: '-115.141376',
+    latitude: '36.17006',
+    type: 'id',
+    gds: 'expedia',
+    name: 'Hotel 2007'
+  },
+  {
+    hotel_id: '2009',
+    property_id: '12384406',
+    room_id: '201273160',
+    search_query: 'Las Vegas',
+    longitude: '-115.141376',
+    latitude: '36.17006',
+    type: 'id',
+    gds: 'expedia',
+    name: 'Hotel 2009'
+  },
+  {
+    hotel_id: '2008',
+    property_id: '12384405',
+    room_id: '201273160',
+    search_query: 'Las Vegas',
+    longitude: '-115.141376',
+    latitude: '36.17006',
+    type: 'id',
+    gds: 'expedia',
+    name: 'Longhorn - Room 160'
+  },
+  {
+    hotel_id: '2008',
+    property_id: '12384405',
+    room_id: '201273161',
+    search_query: 'Las Vegas',
+    longitude: '-115.141376',
+    latitude: '36.17006',
+    type: 'id',
+    gds: 'expedia',
+    name: 'Longhorn - Room 161'
+  }
+];
+
+/**
+ * New York, NY hotels for discount testing (travel.tripbeast.com Ancillary engine)
+ * Searched: New York, New York, United States of America
+ * hotel_id 2621 = destination/city ID
+ */
+export const NEW_YORK_HOTELS = [
+  {
+    hotel_id: '2621',
+    property_id: '82501881',
+    room_id: '327618641',
+    search_query: 'New York',
+    longitude: '-74.005966',
+    latitude: '40.712843',
+    type: 'id',
+    gds: 'expedia',
+    name: 'Interfaith Retreats'
+  },
+  {
+    hotel_id: '2621',
+    property_id: '24245',
+    room_id: '201967771',
+    search_query: 'New York',
+    longitude: '-74.005966',
+    latitude: '40.712843',
+    type: 'id',
+    gds: 'expedia',
+    name: 'Paramount'
+  },
+  {
+    hotel_id: '2621',
+    property_id: '109701641',
+    room_id: '327435609',
+    search_query: 'New York',
+    longitude: '-74.005966',
+    latitude: '40.712843',
+    type: 'id',
+    gds: 'expedia',
+    name: 'Now Now Noho'
+  }
+];
+
+/**
  * Get the discount percentage for a specific day of the week
  * @param date - The date to check
  * @returns Discount percentage for that day

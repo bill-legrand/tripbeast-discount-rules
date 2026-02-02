@@ -12,6 +12,9 @@ param(
     [switch]$DOWTests = $false
 )
 
+# Remove NO_COLOR to avoid conflict with FORCE_COLOR warnings
+Remove-Item Env:NO_COLOR -ErrorAction SilentlyContinue
+
 # Set credentials
 $env:ADMIN_USERNAME = "bill.legrand@gmail.com"
 $env:ADMIN_PASSWORD = "@fHRnam2Au7VYsS"
