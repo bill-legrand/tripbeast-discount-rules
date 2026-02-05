@@ -42,15 +42,15 @@ $baseCommand = "npx playwright test"
 switch ($TestType) {
     "all" {
         Write-Host "Running ALL Low Rate Discount tests..." -ForegroundColor Green
-        $testFile = "low-rate-discount.spec.ts low-rate-discount-enhanced.spec.ts"
+        $testFile = "tests/hotel/low-rate-discount.spec.ts tests/hotel/low-rate-discount-enhanced.spec.ts"
     }
     "basic" {
         Write-Host "Running BASIC Low Rate Discount tests..." -ForegroundColor Green
-        $testFile = "low-rate-discount.spec.ts"
+        $testFile = "tests/hotel/low-rate-discount.spec.ts"
     }
     "enhanced" {
         Write-Host "Running ENHANCED data-driven tests..." -ForegroundColor Green
-        $testFile = "low-rate-discount-enhanced.spec.ts"
+        $testFile = "tests/hotel/low-rate-discount-enhanced.spec.ts"
     }
     "matrix" {
         Write-Host "Running MATRIX tests..." -ForegroundColor Green
@@ -58,19 +58,19 @@ switch ($TestType) {
     }
     "regression" {
         Write-Host "Running REGRESSION tests..." -ForegroundColor Green
-        $testFile = "low-rate-discount-enhanced.spec.ts -g 'Regression'"
+        $testFile = "hotel/low-rate-discount-enhanced.spec.ts -g 'Regression'"
     }
     "boundary" {
         Write-Host "Running BOUNDARY tests..." -ForegroundColor Green
-        $testFile = "low-rate-discount.spec.ts -g 'boundary'"
+        $testFile = "tests/hotel/low-rate-discount.spec.ts -g 'boundary'"
     }
     "dates" {
         Write-Host "Running DATE RANGE tests..." -ForegroundColor Green
-        $testFile = "low-rate-discount.spec.ts -g 'Date Range'"
+        $testFile = "hotel/low-rate-discount.spec.ts -g 'Date Range'"
     }
     "rates" {
         Write-Host "Running RATE THRESHOLD tests..." -ForegroundColor Green
-        $testFile = "low-rate-discount.spec.ts -g 'rate of'"
+        $testFile = "tests/hotel/low-rate-discount.spec.ts -g 'rate of'"
     }
 }
 
@@ -120,7 +120,7 @@ Write-Host "========================================" -ForegroundColor Cyan
 Write-Host "Test execution complete!" -ForegroundColor Green
 Write-Host "========================================" -ForegroundColor Cyan
 Write-Host ""
-Write-Host "Screenshots saved to: screenshots/" -ForegroundColor Yellow
+Write-Host "Screenshots saved to: test-results/hotel/screenshots/" -ForegroundColor Yellow
 Write-Host "Test results saved to: test-results/" -ForegroundColor Yellow
 Write-Host ""
 Write-Host "To view the HTML report, run:" -ForegroundColor Cyan

@@ -1,6 +1,6 @@
 # Car Rental 1-Day Discount Test Report
 
-**Date:** February 1, 2026
+**Date:** February 4, 2026
 **Test Suite:** 1-Day Car Rentals
 **Total Tests:** 31
 
@@ -11,8 +11,8 @@
 **Discount Rule:** Ancii Stage DR
 **Discount Rule ID:** eb511fff-19b8-4a27-91d5-dd8e69f31809
 **Customer:** Tripbeast Ancillary
-**Booking Engine:** https://bookings.tripbeast.com
-**JWT:** Production JWT (same as hotel DOW testing)
+**Booking Engine:** https://travel.tripbeast.com
+**JWT:** Tripbeast Ancillary (same as working hotel tests)
 **Location:** Las Vegas Strip
 **Tolerance:** ±1%
 
@@ -31,25 +31,11 @@
 
 ## Test Results
 
-### 2026-03-01 (Sunday) - Period 1 (12% Fixed)
-
-**Status:** ❌ FAIL
-**Expected Discount:** 12%
-**Actual Discount:** 0%
-**Difference:** 12.0%
-**Gross Price:** $0.00
-**Discount Amount:** $0.00
-**Net Price:** $0.00
-
-![Screenshot](car-screenshots/1-day/1day-2026-03-01.png)
-
----
-
 
 ## Summary
 
 **Total Tests:** 31
-**Test Date:** 2/1/2026, 10:53:04 PM
+**Test Date:** 2/4/2026, 7:43:25 PM
 
 ---
 

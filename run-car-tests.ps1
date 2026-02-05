@@ -86,15 +86,27 @@ if ($Help) {
     Write-Host "    - CAR_1DAY_DISCOUNT_REPORT.md"
     Write-Host "    - CAR_2DAY_DISCOUNT_REPORT.md"
     Write-Host "    - CAR_7DAY_DISCOUNT_REPORT.md"
-    Write-Host "  Screenshots saved to:"
-    Write-Host "    - test-results/car-screenshots/1-day/"
-    Write-Host "    - test-results/car-screenshots/2-day/"
-    Write-Host "    - test-results/car-screenshots/7-day/`n"
+    Write-Host "  Screenshots saved to: test-results/car/{run-id}/{suite}/"
+    Write-Host "    (e.g. test-results/car/2026-02-03_14-30-00/1-day/)`n"
     
     exit 0
 }
 
 Write-Header "Car Rental Discount Tests"
+
+# Generate fresh JWT to avoid 403/invalid token (backend rejects stale tokens)
+$jwtOutput = node generate-jwt-ancillary.js --minimal 2>&1
+$freshJwt = ($jwtOutput | Select-String "^eyJ[\w\-=.]+\.eyJ[\w\-=.]+\.[\w\-=]+$" | Select-Object -First 1).ToString().Trim()
+if ($freshJwt) {
+    $env:CAR_BOOKING_JWT = $freshJwt
+    Write-Info "Fresh JWT loaded (minimal - no discount rule)"
+} else {
+    Write-Info "Using CAR_BOOKING_JWT from env (or default)"
+}
+
+# Set run ID for organized output: test-results/car/{date_time}/{suite}/
+$env:CAR_TEST_RUN_ID = Get-Date -Format "yyyy-MM-dd_HH-mm-ss"
+Write-Info "Output: test-results/car/$env:CAR_TEST_RUN_ID/"
 
 # Check if node_modules exists
 if (!(Test-Path "node_modules")) {
@@ -110,18 +122,18 @@ if (!(Test-Path "node_modules")) {
 # Determine which tests to run
 $testFiles = @()
 if ($OneDay) {
-    $testFiles += "car-1day-discount.spec.ts"
+    $testFiles += "car/car-1day-discount.spec.ts"
     Write-Info "Running 1-Day Rental tests (31 tests)"
 } elseif ($TwoDay) {
     $testFiles += "car-2day-discount.spec.ts"
     Write-Info "Running 2-Day Rental tests (29 tests)"
 } elseif ($SevenDay) {
-    $testFiles += "car-7day-discount.spec.ts"
+    $testFiles += "car/car-7day-discount.spec.ts"
     Write-Info "Running 7-Day Rental tests (24 tests)"
 } else {
-    $testFiles += "car-1day-discount.spec.ts"
+    $testFiles += "car/car-1day-discount.spec.ts"
     $testFiles += "car-2day-discount.spec.ts"
-    $testFiles += "car-7day-discount.spec.ts"
+    $testFiles += "car/car-7day-discount.spec.ts"
     Write-Info "Running ALL Car Rental tests (84 tests)"
 }
 
@@ -181,15 +193,7 @@ if ($LASTEXITCODE -eq 0) {
     }
     
     Write-Host "`nScreenshots saved to:" -ForegroundColor White
-    if ($OneDay -or !$TwoDay -and !$SevenDay) {
-        Write-Success "test-results/car-screenshots/1-day/"
-    }
-    if ($TwoDay -or !$OneDay -and !$SevenDay) {
-        Write-Success "test-results/car-screenshots/2-day/"
-    }
-    if ($SevenDay -or !$OneDay -and !$TwoDay) {
-        Write-Success "test-results/car-screenshots/7-day/"
-    }
+    Write-Success "test-results/car/$env:CAR_TEST_RUN_ID/"
     
     if ($Report) {
         Write-Host "`n" -NoNewline

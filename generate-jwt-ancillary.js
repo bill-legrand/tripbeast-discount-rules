@@ -5,8 +5,11 @@ const JWT_SECRET = 'LULX6HXY7L';
 const BUSINESS_RULE_ID = 'aa4c786b-6516-4cf8-be1c-29e458dcf1f6';
 const DISCOUNT_RULE_ID = 'eb511fff-19b8-4a27-91d5-dd8e69f31809';
 
-// Get discount rule ID from command line argument if provided
-const discountRuleId = process.argv[2] || DISCOUNT_RULE_ID;
+// --minimal = no businessRuleId/discountRuleId (avoids "invalid token" on some endpoints)
+const minimal = process.argv.includes('--minimal');
+// Get custom discount rule ID from args (exclude --flags and node/script paths)
+const customRuleId = process.argv.slice(2).find(a => !a.startsWith('--') && !a.endsWith('.js') && a.includes('-'));
+const discountRuleId = minimal ? undefined : (customRuleId || DISCOUNT_RULE_ID);
 
 // JWT Payload for Ancillary (TripBeast channel)
 const payload = {
@@ -15,12 +18,13 @@ const payload = {
   userLastName: '',
   userEmail: '',
   pricingRuleId: '',
-  businessRuleId: BUSINESS_RULE_ID,
-  discountRuleId: discountRuleId,
+  businessRuleId: minimal ? '' : BUSINESS_RULE_ID,
+  discountRuleId: minimal ? undefined : discountRuleId,
   clientLogoUrl: '',
   membership: false,
   iat: Math.floor(Date.now() / 1000)
 };
+if (minimal) delete payload.discountRuleId;
 
 // Generate JWT
 const token = jwt.sign(payload, JWT_SECRET);

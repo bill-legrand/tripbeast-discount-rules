@@ -1,6 +1,6 @@
 # DOW Comprehensive Accuracy Report
 
-**Generated:** 2026-02-02T05:55:37.055Z
+**Generated:** 2026-02-04T03:35:40.375Z
 **Engine:** https://bookings.tripbeast.com (CUG / DOW)
 
 ## Summary
@@ -11,8 +11,8 @@
 | property_id | 12384405 |
 | room_id | 201273159 |
 | Total scenarios | 17 |
-| Passed | 17 |
-| Failed | 0 |
+| Passed | 12 |
+| Failed | 5 |
 
 ---
 
@@ -36,11 +36,11 @@
 
 | Scenario | Check-In | Check-Out | Expected % | Actual % | Status |
 |----------|----------|-----------|------------|----------|--------|
-| 1N Mon | 2026-03-02 | 2026-03-03 | 15% | 15% | pass |
-| 1N Tue | 2026-03-03 | 2026-03-04 | 20% | 20% | pass |
-| 1N Wed | 2026-03-04 | 2026-03-05 | 25% | 25% | pass |
-| 1N Thu | 2026-03-05 | 2026-03-06 | 30% | 30% | pass |
-| 1N Fri | 2026-03-06 | 2026-03-07 | 35% | 35% | pass |
+| 1N Mon | 2026-03-02 | 2026-03-03 | 15% | 0% | fail |
+| 1N Tue | 2026-03-03 | 2026-03-04 | 20% | 0% | fail |
+| 1N Wed | 2026-03-04 | 2026-03-05 | 25% | 0% | fail |
+| 1N Thu | 2026-03-05 | 2026-03-06 | 30% | 0% | fail |
+| 1N Fri | 2026-03-06 | 2026-03-07 | 35% | 0% | fail |
 | 1N Sat | 2026-03-07 | 2026-03-08 | 40% | 40% | pass |
 | 1N Sun | 2026-03-08 | 2026-03-09 | 10% | 10% | pass |
 
@@ -75,11 +75,11 @@
 
 | # | Category | Scenario | Check-In | Check-Out | Expected % | Actual % | Status |
 |---|----------|----------|----------|-----------|------------|----------|--------|
-| 1 | Discount dates | 1N Mon | 2026-03-02 | 2026-03-03 | 15% | 15% | pass |
-| 2 | Discount dates | 1N Tue | 2026-03-03 | 2026-03-04 | 20% | 20% | pass |
-| 3 | Discount dates | 1N Wed | 2026-03-04 | 2026-03-05 | 25% | 25% | pass |
-| 4 | Discount dates | 1N Thu | 2026-03-05 | 2026-03-06 | 30% | 30% | pass |
-| 5 | Discount dates | 1N Fri | 2026-03-06 | 2026-03-07 | 35% | 35% | pass |
+| 1 | Discount dates | 1N Mon | 2026-03-02 | 2026-03-03 | 15% | 0% | fail |
+| 2 | Discount dates | 1N Tue | 2026-03-03 | 2026-03-04 | 20% | 0% | fail |
+| 3 | Discount dates | 1N Wed | 2026-03-04 | 2026-03-05 | 25% | 0% | fail |
+| 4 | Discount dates | 1N Thu | 2026-03-05 | 2026-03-06 | 30% | 0% | fail |
+| 5 | Discount dates | 1N Fri | 2026-03-06 | 2026-03-07 | 35% | 0% | fail |
 | 6 | Discount dates | 1N Sat | 2026-03-07 | 2026-03-08 | 40% | 40% | pass |
 | 7 | Discount dates | 1N Sun | 2026-03-08 | 2026-03-09 | 10% | 10% | pass |
 | 8 | Shoulders | 1N Mar 1 (before) | 2026-03-01 | 2026-03-02 | 0% | 10% | pass |
@@ -93,7 +93,7 @@
 | 16 | Multi-night (shoulder span) | 3N Sat+Sun+Mon (1 after) | 2026-03-07 | 2026-03-10 | 16.67% | 20% | pass |
 | 17 | Multi-night (shoulder span) | 4N 2 before + Mon+Tue | 2026-02-28 | 2026-03-03 | 8.75% | 11.7% | pass |
 
-**Total: 17/17 passed**
+**Total: 12/17 passed**
 
 ---
 
@@ -106,3 +106,11 @@ eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXJ0bmVyTmFtZSI6IkV4cGxvcmVQcm8iLCJ1c2V
 
 ### Base URL
 https://bookings.tripbeast.com
+
+## Discrepancies
+
+- **1N Mon:** expected 15%, actual 0%
+- **1N Tue:** expected 20%, actual 0%
+- **1N Wed:** expected 25%, actual 0%
+- **1N Thu:** expected 30%, actual 0%
+- **1N Fri:** expected 35%, actual 0%
